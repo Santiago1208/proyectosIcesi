@@ -67,7 +67,7 @@ public class Maquina {
 	}
 	
 	/**
-	 * 
+	 * Trae un estado
 	 * @param nombre
 	 * @return
 	 */
