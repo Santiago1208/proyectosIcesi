@@ -31,7 +31,7 @@ public class Maquina {
 		tipoMaquina = tipoMaq;
 		estados = new HashSet<>();
 		estadoInicial = null;
-	}
+	} 
 	
 	// Servicios
 	// ======================================================================================
@@ -50,7 +50,8 @@ public class Maquina {
 
 	public void eliminarInalcanzables() {
 		// TODO - implement Maquina.eliminarInalcanzables
-		throw new UnsupportedOperationException();
+//		throw new UnsupportedOperationException();
+		
 	}
 	
 	public void agregarEstado(String estado) throws Exception{

@@ -3,7 +3,7 @@ package modelo;
 import java.util.HashSet;
 
 public class Estado {
-
+ 
 	// Atributos
 	// ======================================================================================
 	
