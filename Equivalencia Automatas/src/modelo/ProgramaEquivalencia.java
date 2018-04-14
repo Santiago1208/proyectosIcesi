@@ -54,10 +54,18 @@ public class ProgramaEquivalencia implements IAutomata {
 			String estado = estadosM.get(i);
 			Estado nuevoEstado = new Estado(estado);
 			for (int j = 0; j < transicionesM.length; j++) {
+				// Recuperamos la entrada
 				String in = inputsM[j];
-				String out = "" + transicionesM[j].charAt(2);
-				String estadoLlegada = "" + transicionesM[j].charAt(0);
-				Transicion nuevaTransicion = new Transicion(in, out, null);
+				// Dividimos la transición dada de la forma Estado, salida
+				String[] split = transicionesM[j].split(", ");
+				// Recuperamos el estado de llegada
+				String estadoLlegada = split[0];
+				Estado e = m.traerEstado(estadoLlegada);
+				// Recuperamos la salida
+				String out = split[1];
+				// Creamos la transición
+				Transicion nuevaTransicion = new Transicion(in, out, e);
+				
 			}
 		}
 		

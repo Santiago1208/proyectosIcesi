@@ -1,10 +1,11 @@
 package modelo;
 
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Iterator;
+
 
 public class Estado {
- 
+
 	// Atributos
 	// ======================================================================================
 	
@@ -60,9 +61,6 @@ public class Estado {
 			
 		
 	}
-	
-	
-	
 	
 
 	/**

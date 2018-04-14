@@ -75,10 +75,10 @@ public class Maquina {
 	}
 
 	/**
-	 * Trae un estado
+	 * Trae el estado con el nombre especificado.
 	 * 
-	 * @param nombre
-	 * @return
+	 * @param nombre Es el nombre del estado que se quiere recuperar.
+	 * @return El estado con el nombre especificado.
 	 */
 	public Estado traerEstado(String nombre) {
 		Estado buscado = null;
