@@ -86,6 +86,26 @@ public class Maquina {
 		return estadosx;
 
 	}
+	
+	public void exploradorEstados(String name){
+		
+		Queue<Estado> cola = new ArrayDeque<>();
+		cola.add(estadoInicial);
+		while (!cola.isEmpty()) {
+			Estado act = cola.poll();
+			Iterator<Transicion> iterador = act.darTransicion().iterator();
+			while (iterador.hasNext()) {
+				Transicion nueva = iterador.next();
+				cola.add(nueva.darEstadoLlegada());
+				if(act.darNombre().equals(name)) {
+					estadoInicial.modificarNombre(name+"'");
+				}
+			}
+		}
+
+		
+	}
+	
 
 	public void agregarEstado(String estado) throws Exception {
 		try {
