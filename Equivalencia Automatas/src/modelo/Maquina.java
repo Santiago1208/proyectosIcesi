@@ -55,9 +55,10 @@ public class Maquina {
 		return estados;
 	}
 
-	public void eliminarInalcanzables() {
+	public void eliminarInalcanzables() throws Exception {
 		// TODO - implement Maquina.eliminarInalcanzables
 		// throw new UnsupportedOperationException();
+
 		String aux = estadoInicial.darNombre();
 		Queue<Estado> cola = new ArrayDeque<>();
 		cola.add(estadoInicial);
@@ -67,26 +68,16 @@ public class Maquina {
 			while (iterador.hasNext()) {
 				Transicion nueva = iterador.next();
 				cola.add(nueva.darEstadoLlegada());
+
 				aux += nueva.darEstadoLlegada().darNombre();
 			}
 		}
 
-		System.out.println(aux);
+		estados.removeAll(estados);
 
-		Iterator<Estado> iteradorP = estados.iterator();
-		while (iteradorP.hasNext()) {
-			Estado nueva = iteradorP.next();
-			System.out.println(nueva.darNombre());
-			boolean loEncontro = false;
-			for (int i = 0; i < aux.length() && !loEncontro; i++) {
-			
-				if( !nueva.darNombre().equals(aux.charAt(i)+"")){
-					loEncontro =true;
-					estados.remove(nueva);
-				}
-				
-			}
-			
+		for (int i = 0; i < aux.length(); i++) {
+		
+			agregarEstado(aux.charAt(i)+"");
 		}
 
 	}
