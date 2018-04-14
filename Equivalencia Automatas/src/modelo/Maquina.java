@@ -57,7 +57,7 @@ public class Maquina {
 
 	public void eliminarInalcanzables() {
 		// TODO - implement Maquina.eliminarInalcanzables
-		// throw new UnsupportedOperationException();
+		// throw new UnsupportedOperationException(); 
 		String aux ="";
 		Queue<Estado> cola = new ArrayDeque<>();
 		cola.add(estadoInicial);
