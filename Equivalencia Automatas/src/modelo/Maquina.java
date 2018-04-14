@@ -1,7 +1,10 @@
 package modelo;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Queue;
 
 public class Maquina {
 
@@ -55,11 +58,29 @@ public class Maquina {
 	public void eliminarInalcanzables() {
 		// TODO - implement Maquina.eliminarInalcanzables
 		// throw new UnsupportedOperationException();
+		String aux ="";
+		Queue<Estado> cola = new ArrayDeque<>();
+		cola.add(estadoInicial);
+		while (cola.isEmpty()) {
+			Estado act = cola.poll();
+			Iterator<Transicion> iterador = act.darTransicion().iterator();
+			while (iterador.hasNext()) {
+				Transicion nueva = iterador.next();
+				cola.add(nueva.darEstadoLlegada());
+				aux+=nueva.darEstadoLlegada().darNombre();
+			}
+		}
+		
+		
+		Iterator<Estado> iterador = estados.iterator();
+		while (iterador.hasNext()) {
+			Estado nueva = iterador.next();
+			boolean loConntendra= aux.contains(nueva.darNombre());
+			if(!loConntendra){
+				estados.remove(nueva);
+			}
+		}
 
-		estadoInicial.modificarVisitado(true);
-
-	
-	
 	}
 
 	public void agregarEstado(String estado) throws Exception {
@@ -77,7 +98,8 @@ public class Maquina {
 	/**
 	 * Trae el estado con el nombre especificado.
 	 * 
-	 * @param nombre Es el nombre del estado que se quiere recuperar.
+	 * @param nombre
+	 *            Es el nombre del estado que se quiere recuperar.
 	 * @return El estado con el nombre especificado.
 	 */
 	public Estado traerEstado(String nombre) {
