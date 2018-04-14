@@ -2,7 +2,7 @@ package modelo;
 import java.util.HashSet;
 
 public class Maquina {
-
+ 
 	// Constantes
 	// ======================================================================================
 	
