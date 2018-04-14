@@ -1,39 +1,42 @@
 package modelo;
+
 import java.util.HashSet;
 import java.util.Iterator;
 
 public class Maquina {
- 
+
 	// Constantes
 	// ======================================================================================
-	
+
 	public final static String TIPO_MEALY = "Mealy";
-	
+
 	public final static String TIPO_MOORE = "Moore";
-	
+
 	// Atributos
 	// ======================================================================================
-	
+
 	private HashSet<Estado> estados;
-	
+
 	private String tipoMaquina;
-	
-	private Estado estadoInicial; 
+
+	private Estado estadoInicial;
 
 	// Constructor
 	// ======================================================================================
-	
+
 	/**
 	 * Construye una máquina del tipo especificado.
-	 * @param tipoMaq Es el tipo de máquina que se va a crear. Puede ser
-	 * Maquina.TIPO_MEALY o Maquina.TIPO_MOORE
+	 * 
+	 * @param tipoMaq
+	 *            Es el tipo de máquina que se va a crear. Puede ser
+	 *            Maquina.TIPO_MEALY o Maquina.TIPO_MOORE
 	 */
 	public Maquina(String tipoMaq) {
 		tipoMaquina = tipoMaq;
 		estados = new HashSet<>();
 		estadoInicial = null;
-	} 
-	
+	}
+
 	// Servicios
 	// ======================================================================================
 
@@ -44,31 +47,36 @@ public class Maquina {
 	public Estado darEstadoInicial() {
 		return estadoInicial;
 	}
-	
-	public HashSet<Estado> darEstados(){
+
+	public HashSet<Estado> darEstados() {
 		return estados;
 	}
 
 	public void eliminarInalcanzables() {
 		// TODO - implement Maquina.eliminarInalcanzables
-//		throw new UnsupportedOperationException();
-		
-	}
+		// throw new UnsupportedOperationException();
+
+		estadoInicial.modificarVisitado(true);
+
 	
-	public void agregarEstado(String estado) throws Exception{
+	
+	}
+
+	public void agregarEstado(String estado) throws Exception {
 		try {
 			Estado nuevoEstado = new Estado(estado);
 			estados.add(nuevoEstado);
 			if (estados.size() == 1) {
 				estadoInicial = nuevoEstado;
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			throw new Exception("No se pudo agregar el estado " + estado + ".\n" + e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Trae un estado
+	 * 
 	 * @param nombre
 	 * @return
 	 */

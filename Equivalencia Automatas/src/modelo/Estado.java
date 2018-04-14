@@ -1,6 +1,7 @@
 package modelo;
 
 import java.util.HashSet;
+import java.util.Iterator;
 
 public class Estado {
  
@@ -45,6 +46,24 @@ public class Estado {
 	public boolean fueVisitado() {
 		return visitado;
 	}
+	
+	
+
+	public void agregarTransiciones(String input, String oput, Estado estadoDestino) {
+		
+		try {
+			Transicion nueva = new Transicion(input, oput, estadoDestino);
+			transiciones.add(nueva);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+			
+		
+	}
+	
+	
+	
+	
 
 	/**
 	 * 
