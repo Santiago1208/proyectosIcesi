@@ -57,28 +57,36 @@ public class Maquina {
 
 	public void eliminarInalcanzables() {
 		// TODO - implement Maquina.eliminarInalcanzables
-		// throw new UnsupportedOperationException(); 
-		String aux ="";
+		// throw new UnsupportedOperationException();
+		String aux = estadoInicial.darNombre();
 		Queue<Estado> cola = new ArrayDeque<>();
 		cola.add(estadoInicial);
-		while (cola.isEmpty()) {
+		while (!cola.isEmpty()) {
 			Estado act = cola.poll();
 			Iterator<Transicion> iterador = act.darTransicion().iterator();
 			while (iterador.hasNext()) {
 				Transicion nueva = iterador.next();
 				cola.add(nueva.darEstadoLlegada());
-				aux+=nueva.darEstadoLlegada().darNombre();
+				aux += nueva.darEstadoLlegada().darNombre();
 			}
 		}
-		
-		
-		Iterator<Estado> iterador = estados.iterator();
-		while (iterador.hasNext()) {
-			Estado nueva = iterador.next();
-			boolean loConntendra= aux.contains(nueva.darNombre());
-			if(!loConntendra){
-				estados.remove(nueva);
+
+		System.out.println(aux);
+
+		Iterator<Estado> iteradorP = estados.iterator();
+		while (iteradorP.hasNext()) {
+			Estado nueva = iteradorP.next();
+			System.out.println(nueva.darNombre());
+			boolean loEncontro = false;
+			for (int i = 0; i < aux.length() && !loEncontro; i++) {
+			
+				if( !nueva.darNombre().equals(aux.charAt(i)+"")){
+					loEncontro =true;
+					estados.remove(nueva);
+				}
+				
 			}
+			
 		}
 
 	}
