@@ -56,10 +56,21 @@ public class Maquina {
 	}
 
 	public void eliminarInalcanzables() throws Exception {
-		// TODO - implement Maquina.eliminarInalcanzables
-		// throw new UnsupportedOperationException();
 
-		String aux = estadoInicial.darNombre();
+		ArrayList<Estado> alcanzables = exploradorEstados();
+		
+		estados.removeAll(estados);
+
+		agregarEstado(alcanzables);
+
+	}
+	
+	
+	
+	public ArrayList<Estado> exploradorEstados(){
+		
+		ArrayList<Estado> estadosx = new ArrayList<>();
+		
 		Queue<Estado> cola = new ArrayDeque<>();
 		cola.add(estadoInicial);
 		while (!cola.isEmpty()) {
@@ -68,17 +79,11 @@ public class Maquina {
 			while (iterador.hasNext()) {
 				Transicion nueva = iterador.next();
 				cola.add(nueva.darEstadoLlegada());
-
-				aux += nueva.darEstadoLlegada().darNombre();
+				estadosx.add(nueva.darEstadoLlegada());
 			}
 		}
 
-		estados.removeAll(estados);
-
-		for (int i = 0; i < aux.length(); i++) {
-		
-			agregarEstado(aux.charAt(i)+"");
-		}
+		return estadosx;
 
 	}
 
@@ -91,6 +96,19 @@ public class Maquina {
 			}
 		} catch (Exception e) {
 			throw new Exception("No se pudo agregar el estado " + estado + ".\n" + e.getMessage());
+		}
+	}
+	
+	
+	public void agregarEstado(ArrayList<Estado> estado) throws Exception{
+		try {
+			estados.add(estadoInicial);
+			for(int i=0;i<estado.size();i++) {
+				estados.add(estado.get(i));
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 

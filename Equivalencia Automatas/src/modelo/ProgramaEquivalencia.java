@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class ProgramaEquivalencia implements IAutomata {
@@ -10,6 +11,9 @@ public class ProgramaEquivalencia implements IAutomata {
 	private Maquina m1;
 	
 	private Maquina m2;
+	
+	
+	
 	
 	// Constructor
 	// ======================================================================================
@@ -74,6 +78,24 @@ public class ProgramaEquivalencia implements IAutomata {
 	private void inicializarTipoMoore(List<String> estadosM1, String[] transicionesM1, List<String> estadosM2, String[] transicionesM2) {
 		
 	}
+	
+//	public void renombraEstados(Maquina conflicto, Estado conflictivo) {
+//		
+//		Iterator<Estado> iterator = conflicto.darEstados().iterator();
+//		
+//		
+//		
+//		while(iterator.hasNext()) {
+//			int i=0;
+//			Estado estadoAux = iterator.next();
+//			if(conflicto.equals(estadoAux)) {
+//				estadoAux.modificarNombre(nuevoNombre);
+//			}
+//		}
+//		
+//		
+//		
+//	}
 
 	public boolean sonEquivalentes() {
 		// TODO - implement ProgramaEquivalencia.sonEquivalentes
@@ -89,5 +111,7 @@ public class ProgramaEquivalencia implements IAutomata {
 		// TODO - implement ProgramaEquivalencia.particionamiento
 		throw new UnsupportedOperationException();
 	}
+	
+	
 
 }
