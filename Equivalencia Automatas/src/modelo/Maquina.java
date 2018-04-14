@@ -1,5 +1,6 @@
 package modelo;
 import java.util.HashSet;
+import java.util.Iterator;
 
 public class Maquina {
  
@@ -64,6 +65,23 @@ public class Maquina {
 		}catch (Exception e) {
 			throw new Exception("No se pudo agregar el estado " + estado + ".\n" + e.getMessage());
 		}
+	}
+	
+	/**
+	 * Trae un estado
+	 * @param nombre
+	 * @return
+	 */
+	public Estado traerEstado(String nombre) {
+		Estado buscado = null;
+		Iterator<Estado> iterador = estados.iterator();
+		while (iterador.hasNext()) {
+			Estado actual = iterador.next();
+			if (actual.darNombre().equals(nombre)) {
+				buscado = actual;
+			}
+		}
+		return buscado;
 	}
 
 }
