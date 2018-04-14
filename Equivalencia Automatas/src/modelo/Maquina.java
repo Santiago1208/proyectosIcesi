@@ -17,7 +17,7 @@ public class Maquina {
 	
 	private String tipoMaquina;
 	
-	private Estado estadoInicial;
+	private Estado estadoInicial; 
 
 	// Constructor
 	// ======================================================================================
