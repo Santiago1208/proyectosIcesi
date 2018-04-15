@@ -58,54 +58,59 @@ public class Maquina {
 	public void eliminarInalcanzables() throws Exception {
 
 		ArrayList<Estado> alcanzables = exploradorEstados();
-		
+
 		estados.removeAll(estados);
 
 		agregarEstado(alcanzables);
 
 	}
-	
-	
-	
-	public ArrayList<Estado> exploradorEstados(){
-		
+
+	public ArrayList<Estado> exploradorEstados() {
+
 		ArrayList<Estado> estadosx = new ArrayList<>();
-		
+
 		Queue<Estado> cola = new ArrayDeque<>();
 		cola.add(estadoInicial);
 		while (!cola.isEmpty()) {
 			Estado act = cola.poll();
+			act.modificarVisitado(true);
+			estadosx.add(act);
 			Iterator<Transicion> iterador = act.darTransicion().iterator();
 			while (iterador.hasNext()) {
 				Transicion nueva = iterador.next();
-				cola.add(nueva.darEstadoLlegada());
-				estadosx.add(nueva.darEstadoLlegada());
+				if(!nueva.darEstadoLlegada().fueVisitado()) {
+					cola.add(nueva.darEstadoLlegada());
+				}
+					
 			}
 		}
 
 		return estadosx;
 
 	}
-	
-	public void exploradorEstados(String name){
-		
+
+	public void exploradorEstados(String name) {
+
 		Queue<Estado> cola = new ArrayDeque<>();
 		cola.add(estadoInicial);
 		while (!cola.isEmpty()) {
 			Estado act = cola.poll();
+			act.modificarVisitado(false);
 			Iterator<Transicion> iterador = act.darTransicion().iterator();
 			while (iterador.hasNext()) {
 				Transicion nueva = iterador.next();
-				cola.add(nueva.darEstadoLlegada());
-				if(act.darNombre().equals(name)) {
-					estadoInicial.modificarNombre(name+"'");
+				if (nueva.darEstadoLlegada().fueVisitado()) {
+					cola.add(nueva.darEstadoLlegada());
+
+					if (act.darNombre().equals(name)) {
+						estadoInicial.modificarNombre(name + "_1");
+					}
 				}
+
 			}
 		}
 
-		
 	}
-	
 
 	public void agregarEstado(String estado) throws Exception {
 		try {
@@ -118,15 +123,14 @@ public class Maquina {
 			throw new Exception("No se pudo agregar el estado " + estado + ".\n" + e.getMessage());
 		}
 	}
-	
-	
-	public void agregarEstado(ArrayList<Estado> estado) throws Exception{
+
+	public void agregarEstado(ArrayList<Estado> estado) throws Exception {
 		try {
 			estados.add(estadoInicial);
-			for(int i=0;i<estado.size();i++) {
+			for (int i = 0; i < estado.size(); i++) {
 				estados.add(estado.get(i));
 			}
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

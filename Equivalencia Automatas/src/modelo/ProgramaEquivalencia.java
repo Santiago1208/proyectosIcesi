@@ -69,10 +69,10 @@ public class ProgramaEquivalencia implements IAutomata {
 				// Dividimos la transición dada de la forma Estado, salida
 				String[] split = transicionesM[i][j].split(", ");
 				// Recuperamos el estado de llegada
-				String estadoLlegada = split[0];
+				String estadoLlegada = split[1];
 				Estado eL = m.traerEstado(estadoLlegada);
 				// Recuperamos la salida
-				String out = split[1];
+				String out = split[0];
 				eI.agregarTransiciones(in, out, eL);
 			}
 		}
@@ -97,7 +97,6 @@ public class ProgramaEquivalencia implements IAutomata {
 				Estado conflictuado = iteratorConflictuado.next();
 				
 				if(ref.equals(conflictuado)) {
-				
 					conflitada.exploradorEstados(conflictuado.darNombre());
 					
 				}
