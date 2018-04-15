@@ -9,6 +9,7 @@ public class main {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		List<String> estadosM1 = new ArrayList<>();
+		
 		estadosM1.add("A");
 		estadosM1.add("B");
 		estadosM1.add("C");
@@ -25,7 +26,9 @@ public class main {
 			new String[] { "1, B", "0, B" }, 
 			new String[] { "0, A", "1, E" },
 			new String[] { "1, F", "1, E" },
-			new String[] { "1, F", "1, E" }};
+			new String[] { "1, F", "1, E" }
+		
+		};
 			
 			
 
@@ -105,13 +108,13 @@ public class main {
 		
 		pro.darMaquinaB().eliminarInalcanzables();
 
-		System.out.println("Eliminando");
+		System.out.println("aLCANZABLES");
 
 		Iterator<Estado> r = pro.darMaquinaA().darEstados().iterator();
 
 		while (r.hasNext()) {
 			Estado bnv = r.next();
-			System.out.println(bnv.darNombre() + "eliminandp");
+			System.out.println(bnv.darNombre() );
 		}
 
 		

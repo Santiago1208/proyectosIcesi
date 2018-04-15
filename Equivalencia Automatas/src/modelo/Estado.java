@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 
+
 public class Estado {
 
 	// Atributos
@@ -56,6 +57,7 @@ public class Estado {
 			Transicion nueva = new Transicion(input, oput, estadoDestino);
 			transiciones.add(nueva);
 		} catch (Exception e) {
+			// TODO: handle exception
 			// TODO: handle exception
 		}
 			
