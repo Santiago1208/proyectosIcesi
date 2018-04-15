@@ -85,4 +85,8 @@ public class Estado {
 		return equals;
 	}
 
+	public boolean isVisitado() {
+		return visitado;
+	}
+
 }

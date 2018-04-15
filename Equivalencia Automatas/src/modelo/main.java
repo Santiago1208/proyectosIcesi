@@ -38,6 +38,7 @@ public class main {
 		estadosM2.add("D");
 		estadosM2.add("E");
 		estadosM2.add("F");
+		estadosM2.add("G");
 
 		String[][] transicionesM2 = new String[][] { 
 			new String[] { "0, B", "0, C" }, 
@@ -101,6 +102,8 @@ public class main {
 		}
 
 		pro.darMaquinaA().eliminarInalcanzables();
+		
+		pro.darMaquinaB().eliminarInalcanzables();
 
 		System.out.println("Eliminando");
 
@@ -112,16 +115,25 @@ public class main {
 		}
 
 		
-		
-
 		 pro.renombraEstados(pro.darMaquinaA(), pro.darMaquinaB());
+
 		
 			System.out.println("renombrando");
 		 
 		 v = pro.darMaquinaB().darEstados().iterator();
+		
 		 while(v.hasNext()){
-		 Estado bnv = v.next();
-		 System.out.println(bnv.darNombre());
+			 String cadena = "#. ";
+			 Estado bnv = v.next();
+			 cadena+=bnv.darNombre()+" ";
+			 Iterator<Transicion> beta = bnv.darTransicion().iterator();
+			 while(beta.hasNext()) {
+				 Estado f = beta.next().darEstadoLlegada();
+				 cadena+=f.darNombre()+" ";
+				
+			 }
+			 System.out.println(cadena);
+		 
 		 }
 		 
 		 
