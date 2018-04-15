@@ -12,8 +12,8 @@ public interface IAutomata {
 	 * @param transicionesM2
 	 * @throws Exception 
 	 */
-	public void inicializarMaquinas(List<String> estadosM1, String[][] transicionesM1, String[] inputsM1,
-			List<String> estadosM2, String[][] transicionesM2, String[] inputsM2, String tipoMaquina) throws Exception;
+	public void inicializarMaquinas(List<String> estadosM1, String[][] transicionesM1, List<String> inputsM1,
+			List<String> estadosM2, String[][] transicionesM2, List<String> inputsM2, String tipoMaquina) throws Exception;
 
 	public boolean sonEquivalentes();
 

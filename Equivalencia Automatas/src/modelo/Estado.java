@@ -1,8 +1,7 @@
 package modelo;
 
 import java.util.HashSet;
-import java.util.Iterator;
-
+import java.util.Iterator;
 
 
 public class Estado {
@@ -15,6 +14,8 @@ public class Estado {
 	private String nombre;
 	
 	private boolean visitado;
+	
+	private int hashCode;
 
 	// Constructor
 	// ======================================================================================
@@ -24,10 +25,11 @@ public class Estado {
 	 * transiciones.
 	 * @param nombre Es el nombre que tendrá el estado.
 	 */
-	public Estado(String nombre) {
+	public Estado(String nombre, int hashCode) {
 		this.nombre = nombre.toUpperCase().trim();
 		visitado = false;
 		transiciones = new HashSet<>(10);
+		this.hashCode = hashCode; 
 	}
 	
 	// Servicios
@@ -51,24 +53,17 @@ public class Estado {
 	
 	
 
-	public void agregarTransiciones(String input, String oput, Estado estadoDestino) {
-		
+	public void agregarTransiciones(String input, String oput, Estado estadoDestino, int hashCode) {
 		try {
-			Transicion nueva = new Transicion(input, oput, estadoDestino);
+			Transicion nueva = new Transicion(input, oput, estadoDestino, hashCode);
 			transiciones.add(nueva);
 		} catch (Exception e) {
 			// TODO: handle exception
-			// TODO: handle exception
 		}
-			
-		
 	}
 	
 
-	/**
-	 * 
-	 * @param visitado
-	 */
+	
 	public void modificarVisitado(boolean visitado) {
 		this.visitado = visitado;
 	}
@@ -89,6 +84,22 @@ public class Estado {
 
 	public boolean isVisitado() {
 		return visitado;
+	}
+	@Override
+	public String toString() {
+		String estado = "";
+		estado = nombre;
+		Iterator<Transicion> iterator = transiciones.iterator();
+		while (iterator.hasNext()) {
+			Transicion transicionActual = iterator.next();
+			estado += transicionActual.toString() + " ";
+		}
+		return estado;
+	}
+	
+	@Override
+	public int hashCode() {
+		return hashCode;
 	}
 
 }

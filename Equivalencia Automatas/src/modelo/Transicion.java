@@ -10,6 +10,8 @@ public class Transicion {
 	
 	private String output;
 	
+	private int hashCode;
+	
 	// Constructor
 	// ======================================================================================
 	
@@ -19,10 +21,11 @@ public class Transicion {
 	 * @param out
 	 * @param estLlegada
 	 */
-	public Transicion(String in, String out, Estado estLlegada) {
+	public Transicion(String in, String out, Estado estLlegada, int hashCode) {
 		input = in;
 		output = out;
 		estadoLlegada = estLlegada;
+		this.hashCode = hashCode;
 	}
 	
 	// Servicios
@@ -49,5 +52,18 @@ public class Transicion {
 		}
 		return equals;
 	}
+	
+	@Override
+	public int hashCode() {
+		return hashCode;
+	}
+	
+	@Override
+	public String toString() {
+		String transicion = "";
+		transicion = "[" + estadoLlegada.darNombre() + ", " + output + "]";
+		return transicion;
+	}
+	
 
 }

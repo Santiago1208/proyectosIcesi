@@ -11,12 +11,18 @@ public class ProgramaEquivalencia implements IAutomata {
 	private Maquina m1;
 
 	private Maquina m2;
-
+	
+	private int hashCodeEstados;
+	
+	private int hashCodeTransiciones;
 	// Constructor
 	// ======================================================================================
 
 	public ProgramaEquivalencia() {
-
+		m1 = new Maquina("");
+		m2 = new Maquina("");
+		hashCodeEstados = 0;
+		hashCodeTransiciones = 0;
 	}
 
 	// Servicios
@@ -38,9 +44,21 @@ public class ProgramaEquivalencia implements IAutomata {
 	 * @param transicionesM2
 	 * @throws Exception
 	 */
-	public void inicializarMaquinas(List<String> estadosM1, String[][] transicionesM1, String[] inputsM1,
-			List<String> estadosM2, String[][] transicionesM2, String[] inputsM2, String tipoMaquina) throws Exception {
+	public void inicializarMaquinas(List<String> estadosM1, String[][] transicionesM1, List<String> inputsM1,
+			List<String> estadosM2, String[][] transicionesM2, List<String> inputsM2, String tipoMaquina) throws Exception {
+		if (estadosM1.size() != transicionesM1.length) {
+			throw new IllegalArgumentException("Error de inicialización: El número de filas de la tabla de transición debe ser igual a la cantidad de estados en la máquina 1.");
+		}
+		if (estadosM2.size() != transicionesM2.length) {
+			throw new IllegalArgumentException("Error de inicialización: El número de filas de la tabla de transición debe ser igual a la cantidad de estados en la máquina 2.");
+		}
 		if (tipoMaquina.equals(Maquina.TIPO_MEALY)) {
+			if (inputsM1.size() != transicionesM1[0].length) {
+				throw new IllegalArgumentException("Error de inicialización: El número de columnas de la tabla de transición debe ser igual a la cantidad de símbolos de entrada en la máquina 1.");
+			}
+			if (inputsM2.size() != transicionesM2[0].length) {
+				throw new IllegalArgumentException("Error de inicialización: El número de columnas de la tabla de transición debe ser igual a la cantidad de símbolos de entrada en la máquina 2.");
+			}
 			m1 = inicializarTipoMealy(estadosM1, transicionesM1, inputsM1);
 			m2 = inicializarTipoMealy(estadosM2, transicionesM2, inputsM2);
 		} else if (tipoMaquina.equals(Maquina.TIPO_MOORE)) {
@@ -49,56 +67,57 @@ public class ProgramaEquivalencia implements IAutomata {
 		}
 	}
 
-	private Maquina inicializarTipoMealy(List<String> estadosM, String[][] transicionesM, String[] inputsM)
+	private Maquina inicializarTipoMealy(List<String> estadosM, String[][] transicionesM, List<String> inputsM)
 			throws Exception {
 		Maquina m = new Maquina(Maquina.TIPO_MEALY);
 
 		// Inicialización de estados
 		for (int i = 0; i < estadosM.size(); i++) {
 			String estado = estadosM.get(i);
-			m.agregarEstado(estado);
+			m.agregarEstado(estado, hashCodeEstados);
+			hashCodeEstados++;
 		}
 		for (int i = 0; i < estadosM.size(); i++) {
 			String estado = estadosM.get(i);
 			Estado eI = m.traerEstado(estado);
 			for (int j = 0; j < transicionesM[0].length; j++) {
 				// Recuperamos la entrada
-				String in = inputsM[j];
+				String in = inputsM.get(j);
 				// Dividimos la transición dada de la forma Estado, salida
 				String[] split = transicionesM[i][j].split(", ");
 				// Recuperamos el estado de llegada
-				String estadoLlegada = split[1];
+				String estadoLlegada = split[0];
 				Estado eL = m.traerEstado(estadoLlegada);
 				// Recuperamos la salida
-				String out = split[0];
-				eI.agregarTransiciones(in, out, eL);
+				String out = split[1];
+				eI.agregarTransiciones(in, out, eL, hashCodeTransiciones);
+				hashCodeTransiciones++;
 			}
 		}
 		return m;
 
 	}
 
-	private void inicializarTipoMoore(List<String> estadosM, String[][] transicionesM, String[] inputsM, Maquina m) {
-
+	private void inicializarTipoMoore(List<String> estadosM, String[][] transicionesM, List<String> inputsM, Maquina m) {
+	
 	}
 
-	public void renombraEstados(Maquina referencia, Maquina conflitada) {
-
-		Iterator<Estado> iterator = referencia.darEstados().iterator();
-		
+	public void renombrarEstados() throws NullPointerException{
+		if (m1 == null || m2 == null) {
+			throw new NullPointerException("Error de renombramiento: Una de las máquinas no está inicializada");
+		}
+		Iterator<Estado> iterator = m1.darEstados().iterator();
 
 		while (iterator.hasNext()) {
 			Estado ref = iterator.next();
-			Iterator<Estado> iteratorConflictuado = conflitada.darEstados().iterator();
+			Iterator<Estado> iteratorConflictuado = m2.darEstados().iterator();
 			while (iteratorConflictuado.hasNext()) {
 				Estado conflictuado = iteratorConflictuado.next();
 				if (conflictuado.equals(ref)) {
-					conflitada.renombraEstados(conflictuado.darNombre());
+					m2.renombraEstados(conflictuado.darNombre());
 				}
-
 			}
 		}
-
 	}
 
 	public boolean sonEquivalentes() {
@@ -106,13 +125,32 @@ public class ProgramaEquivalencia implements IAutomata {
 		throw new UnsupportedOperationException();
 	}
 
-	private Maquina sumaDirecta() {
-		// TODO - implement ProgramaEquivalencia.sumaDirecta
-		throw new UnsupportedOperationException();
+	public Maquina sumaDirecta() throws Exception{
+		Maquina maquinaTotal = new Maquina(m1.darTipoMaquina());
+		try {
+			renombrarEstados();
+			maquinaTotal = m1.sumarMaquina(m2);
+		} catch (NullPointerException e) {
+			throw new NullPointerException("Error de Suma Directa: " + e.getMessage());
+		} catch (IllegalArgumentException f) {
+			throw new IllegalArgumentException("Error de Suma Directa: " + f.getMessage());
+		}
+		return maquinaTotal;
 	}
 
 	private Maquina particionamiento() {
 		// TODO - implement ProgramaEquivalencia.particionamiento
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		throw new UnsupportedOperationException();
 	}
 
