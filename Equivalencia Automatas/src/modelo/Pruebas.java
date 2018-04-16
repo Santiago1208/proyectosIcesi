@@ -123,8 +123,8 @@ public class Pruebas {
 		System.out.println("====================================================");
 		System.out.println("Prueba de Suma Directa");
 		System.out.println("====================================================");
-		Maquina maquinaTotal = pro.sumaDirecta();
-		System.out.println(maquinaTotal.toString());
+		Maquina maquinaTotal = pro.particionamiento();
+//		System.out.println(maquinaTotal.toString());
 
 	}
 	
@@ -294,6 +294,12 @@ public class Pruebas {
 		
 		
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	/**

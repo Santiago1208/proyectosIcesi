@@ -1,5 +1,9 @@
 package modelo;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,9 +15,9 @@ public class ProgramaEquivalencia implements IAutomata {
 	private Maquina m1;
 
 	private Maquina m2;
-	
+
 	private int hashCodeEstados;
-	
+
 	private int hashCodeTransiciones;
 	// Constructor
 	// ======================================================================================
@@ -45,19 +49,24 @@ public class ProgramaEquivalencia implements IAutomata {
 	 * @throws Exception
 	 */
 	public void inicializarMaquinas(List<String> estadosM1, String[][] transicionesM1, List<String> inputsM1,
-			List<String> estadosM2, String[][] transicionesM2, List<String> inputsM2, String tipoMaquina) throws Exception {
+			List<String> estadosM2, String[][] transicionesM2, List<String> inputsM2, String tipoMaquina)
+			throws Exception {
 		if (estadosM1.size() != transicionesM1.length) {
-			throw new IllegalArgumentException("Error de inicialización: El número de filas de la tabla de transición debe ser igual a la cantidad de estados en la máquina 1.");
+			throw new IllegalArgumentException(
+					"Error de inicialización: El número de filas de la tabla de transición debe ser igual a la cantidad de estados en la máquina 1.");
 		}
 		if (estadosM2.size() != transicionesM2.length) {
-			throw new IllegalArgumentException("Error de inicialización: El número de filas de la tabla de transición debe ser igual a la cantidad de estados en la máquina 2.");
+			throw new IllegalArgumentException(
+					"Error de inicialización: El número de filas de la tabla de transición debe ser igual a la cantidad de estados en la máquina 2.");
 		}
 		if (tipoMaquina.equals(Maquina.TIPO_MEALY)) {
 			if (inputsM1.size() != transicionesM1[0].length) {
-				throw new IllegalArgumentException("Error de inicialización: El número de columnas de la tabla de transición debe ser igual a la cantidad de símbolos de entrada en la máquina 1.");
+				throw new IllegalArgumentException(
+						"Error de inicialización: El número de columnas de la tabla de transición debe ser igual a la cantidad de símbolos de entrada en la máquina 1.");
 			}
 			if (inputsM2.size() != transicionesM2[0].length) {
-				throw new IllegalArgumentException("Error de inicialización: El número de columnas de la tabla de transición debe ser igual a la cantidad de símbolos de entrada en la máquina 2.");
+				throw new IllegalArgumentException(
+						"Error de inicialización: El número de columnas de la tabla de transición debe ser igual a la cantidad de símbolos de entrada en la máquina 2.");
 			}
 			m1 = inicializarTipoMealy(estadosM1, transicionesM1, inputsM1);
 			m2 = inicializarTipoMealy(estadosM2, transicionesM2, inputsM2);
@@ -98,11 +107,12 @@ public class ProgramaEquivalencia implements IAutomata {
 
 	}
 
-	private void inicializarTipoMoore(List<String> estadosM, String[][] transicionesM, List<String> inputsM, Maquina m) {
-	
+	private void inicializarTipoMoore(List<String> estadosM, String[][] transicionesM, List<String> inputsM,
+			Maquina m) {
+
 	}
 
-	public void renombrarEstados() throws NullPointerException{
+	public void renombrarEstados() throws NullPointerException {
 		if (m1 == null || m2 == null) {
 			throw new NullPointerException("Error de renombramiento: Una de las máquinas no está inicializada");
 		}
@@ -125,7 +135,7 @@ public class ProgramaEquivalencia implements IAutomata {
 		throw new UnsupportedOperationException();
 	}
 
-	public Maquina sumaDirecta() throws Exception{
+	public Maquina sumaDirecta() throws Exception {
 		Maquina maquinaTotal = new Maquina(m1.darTipoMaquina());
 		try {
 			renombrarEstados();
@@ -138,20 +148,65 @@ public class ProgramaEquivalencia implements IAutomata {
 		return maquinaTotal;
 	}
 
-	private Maquina particionamiento() {
+	public Maquina particionamiento() throws Exception {
 		// TODO - implement ProgramaEquivalencia.particionamiento
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		throw new UnsupportedOperationException();
+
+		Maquina machinetotal = sumaDirecta();
+		HashSet<Estado> estadosTotales = machinetotal.darEstados();
+
+		Estado machinesAux[] = new Estado[estadosTotales.size()];
+		estadosTotales.toArray(machinesAux);
+
+		ArrayList<Estado> b = new ArrayList<>();
+		for (int i = 0; i < machinesAux.length; i++) {
+			b.add(machinesAux[i]);
+		}
+
+		agrupamiento(b);
+		return machinetotal;
+
 	}
 
+	// Estado machinesEstados[] = new Estado[estadosTotales.size()];
+	// estadosTotales.toArray(machinesEstados);
+
+	// for(int i=0;i<machinesEstados.length-1;i++){
+	//
+	// for(int j=0;j<machinesEstados.length-1;j++){
+	//
+	// }
+	//
+	// }
+
+	private HashSet agrupamiento(ArrayList<Estado> machinesEstados) {
+
+		System.out.println(machinesEstados.toString());
+		String e = "";
+		HashSet<HashSet<Estado>> r = new HashSet<>();
+
+		String[][] intputs = new String[machinesEstados.size()][2];
+
+		for (int i = 0; i < intputs.length; i++) {
+			Estado a = machinesEstados.get(i);
+			Iterator<Transicion> tra = machinesEstados.get(i).darTransicion().iterator();
+			for (int j = 0; j < intputs[0].length; j++) {
+				String ki = "";
+
+				Transicion l = tra.next();
+				ki = l.darOutput();
+				intputs[i][j] = ki;
+			}
+
+		}
+
+		for (int x = 0; x < intputs.length; x++) {
+			
+			for (int y = 0; y < intputs[x].length; y++) {
+				
+			}
+			System.out.println("|");
+		}
+
+		return r;
+	}
 }
